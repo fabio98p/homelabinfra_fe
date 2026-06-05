@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Todo, CreateTodoRequest } from './todo.model';
 import { TodoService } from './todo.service';
@@ -7,9 +6,9 @@ import { TodoService } from './todo.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [FormsModule],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
   todos: Todo[] = [];
