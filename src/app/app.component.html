@@ -1,0 +1,37 @@
+<div class="container">
+  <h1>TodoList</h1>
+
+  <div class="form">
+    <input
+      type="text"
+      [(ngModel)]="draft.title"
+      placeholder="What needs to be done?"
+      (keyup.enter)="add()"
+    />
+    <input
+      type="text"
+      [(ngModel)]="draft.description"
+      placeholder="Description (optional)"
+      (keyup.enter)="add()"
+    />
+    <button (click)="add()" [disabled]="!draft.title.trim()">Add</button>
+  </div>
+
+  <p *ngIf="error" class="error">{{ error }}</p>
+  <p *ngIf="loading" class="hint">Loading&#8230;</p>
+
+  <ul *ngIf="todos.length > 0">
+    <li *ngFor="let todo of todos" [class.done]="todo.completed">
+      <label>
+        <input type="checkbox" [checked]="todo.completed" (change)="toggle(todo)" />
+        <span class="title">{{ todo.title }}</span>
+        <span *ngIf="todo.description" class="desc">{{ todo.description }}</span>
+      </label>
+      <button class="del" (click)="delete(todo.id)">&#x2715;</button>
+    </li>
+  </ul>
+
+  <p *ngIf="!loading && todos.length === 0 && !error" class="hint">
+    No todos yet. Add one above!
+  </p>
+</div>
