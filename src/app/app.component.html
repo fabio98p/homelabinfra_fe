@@ -17,21 +17,32 @@
     <button (click)="add()" [disabled]="!draft.title.trim()">Add</button>
   </div>
 
-  <p *ngIf="error" class="error">{{ error }}</p>
-  <p *ngIf="loading" class="hint">Loading&#8230;</p>
+  @if (error) {
+    <p class="error">{{ error }}</p>
+  }
 
-  <ul *ngIf="todos.length > 0">
-    <li *ngFor="let todo of todos" [class.done]="todo.completed">
-      <label>
-        <input type="checkbox" [checked]="todo.completed" (change)="toggle(todo)" />
-        <span class="title">{{ todo.title }}</span>
-        <span *ngIf="todo.description" class="desc">{{ todo.description }}</span>
-      </label>
-      <button class="del" (click)="delete(todo.id)">&#x2715;</button>
-    </li>
-  </ul>
+  @if (loading) {
+    <p class="hint">Loading&#8230;</p>
+  }
 
-  <p *ngIf="!loading && todos.length === 0 && !error" class="hint">
-    No todos yet. Add one above!
-  </p>
+  @if (todos.length > 0) {
+    <ul>
+      @for (todo of todos; track todo.id) {
+        <li [class.done]="todo.completed">
+          <label>
+            <input type="checkbox" [checked]="todo.completed" (change)="toggle(todo)" />
+            <span class="title">{{ todo.title }}</span>
+            @if (todo.description) {
+              <span class="desc">{{ todo.description }}</span>
+            }
+          </label>
+          <button class="del" (click)="delete(todo.id)">&#x2715;</button>
+        </li>
+      }
+    </ul>
+  }
+
+  @if (!loading && todos.length === 0 && !error) {
+    <p class="hint">No todos yet. Add one above!</p>
+  }
 </div>
